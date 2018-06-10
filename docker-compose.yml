@@ -169,6 +169,7 @@ services:
 #  elasticsearch:
 #    container_name: elasticsearch
 #    image: maxb/elasticsearch:latest
+#    #build: ./elasticsearch
 #    ports:
 #      - "9200:9200"
 #      - "9300:9300"
@@ -180,11 +181,12 @@ services:
 #      http.cors.allow-origin: "*"
 #    expose:
 #      - 9200
-#
-#
+
+
 #  fluentd:
 #    container_name: fluentd
 #    image: maxb/fluentd:latest
+#    #build: ./fluentd/build_image.sh
 #    volumes:
 #      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
 #    ports:
@@ -203,6 +205,7 @@ services:
 #  kibana:
 #    container_name: kibana
 #    image: maxb/kibana:latest
+#    #build: ./kibana/build_image.sh
 #    environment:
 #      SERVER_NAME: kibana
 #      ELASTICSEARCH_URL: http://elasticsearch:9200
