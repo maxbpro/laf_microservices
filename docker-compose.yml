@@ -85,13 +85,13 @@ services:
       KAFKASERVER_URI: "kafkaserver"
       ZKSERVER_URI: "kafkaserver"
       ENCRYPT_KEY:       "IMSYMMETRIC"
-#    logging:
-#      driver: "fluentd"
-#      options:
-#        fluentd-address: localhost:24224
-#        tag: httpd.access
-#    depends_on:
-#      - fluentd
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: httpd.access
+    depends_on:
+      - fluentd
 
   database-like:
     image: mongo
@@ -102,27 +102,36 @@ services:
     restart: always
 
 
-#  followeservice:
-#    image: maxb/laf-follower-service:vk-laf-follower-service
-#    ports:
-#      - "8086:8085"
-#    environment:
-#      PROFILE: "default"
-#      SERVER_PORT: "8086"
-#      CONFIGSERVER_URI: "http://configserver:8888"
-#      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-#      EUREKASERVER_PORT:   "8761"
-#      CONFIGSERVER_PORT:   "8888"
-#      ZUULSERVER_PORT:     "5555"
-#      ENCRYPT_KEY:       "IMSYMMETRIC"
+  followeservice:
+    image: maxb/laf-follower-service:vk-laf-follower-service
+    ports:
+      - "8086:8085"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8086"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      EUREKASERVER_PORT:   "8761"
+      CONFIGSERVER_PORT:   "8888"
+      ZUULSERVER_PORT:     "5555"
+      KAFKASERVER_PORT:    "2181"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "kafkaserver"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: httpd.access
+    depends_on:
+      - fluentd
 
-
-#  database-follower:
-#    image: mongo
-#    volumes:
-#      - $HOME/follower-data:/data/db
-#      - $HOME/follower-datacd:/data/bkp
-#    restart: always
+  database-follower:
+    image: mongo
+    volumes:
+      - $HOME/follower-data:/data/db
+      - $HOME/follower-datacd:/data/bkp
+    restart: always
 
   userservice:
     image: maxb/laf-user-service:vk-laf-user-service
@@ -140,13 +149,13 @@ services:
       KAFKASERVER_URI: "kafkaserver"
       ZKSERVER_URI: "kafkaserver"
       ENCRYPT_KEY:       "IMSYMMETRIC"
-#    logging:
-#      driver: "fluentd"
-#      options:
-#        fluentd-address: localhost:24224
-#        tag: httpd.access
-#    depends_on:
-#      - fluentd
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: httpd.access
+    depends_on:
+      - fluentd
 
   database-user:
     image: mongo
@@ -157,54 +166,54 @@ services:
       - $HOME/user-datacd:/data/bkp
     restart: always
 
-#  elasticsearch:
-#    container_name: elasticsearch
-#    image: maxb/elasticsearch:latest
-#    ports:
-#      - "9200:9200"
-#      - "9300:9300"
-#    environment:
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-#      ELASTIC_USERNAME: "elastic"
-#      ELASTIC_PASSWORD: "changeme"
-#      http.cors.enabled: "true"
-#      http.cors.allow-origin: "*"
-#    expose:
-#      - 9200
-#
-#
-#  fluentd:
-#    container_name: fluentd
-#    image: maxb/fluentd:latest
-#    volumes:
-#      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
-#    ports:
-#      - "24224:24224"
-#      - "24224:24224/udp"
-#    depends_on:
-#      - elasticsearch
-#    links:
-#      - elasticsearch
-#    logging:
-#      driver: "json-file"
-#      options:
-#        max-size: 100m
-#        max-file: "5"
-#
-#  kibana:
-#    container_name: kibana
-#    image: maxb/kibana:latest
-#    environment:
-#      SERVER_NAME: kibana
-#      ELASTICSEARCH_URL: http://elasticsearch:9200
-#    ports:
-#      - "5601:5601"
-#    depends_on:
-#      - elasticsearch
-#    links:
-#      - elasticsearch
-#
-#
+  elasticsearch:
+    container_name: elasticsearch
+    image: maxb/elasticsearch:latest
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_USERNAME: "elastic"
+      ELASTIC_PASSWORD: "changeme"
+      http.cors.enabled: "true"
+      http.cors.allow-origin: "*"
+    expose:
+      - 9200
+
+
+  fluentd:
+    container_name: fluentd
+    image: maxb/fluentd:latest
+    volumes:
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    logging:
+      driver: "json-file"
+      options:
+        max-size: 100m
+        max-file: "5"
+
+  kibana:
+    container_name: kibana
+    image: maxb/kibana:latest
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+
+
 
 
   kafkaserver:
