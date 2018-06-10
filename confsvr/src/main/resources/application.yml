@@ -1,0 +1,25 @@
+
+server:
+  port: 8888
+
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      server:
+        encrypt.enabled: false
+        git:
+          uri: https://github.com/maxbpro/laf-config-repo
+          searchPaths: zuulservice,authenticationservice,likeservice,followerservice,userservice
+
+
+
+
+
+#Setting logging levels
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    com.thoughtmechanix: DEBUG

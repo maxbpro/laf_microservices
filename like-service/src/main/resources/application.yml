@@ -1,0 +1,38 @@
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+            destination:  balanceChangeTopic
+            content-type: application/json
+      kafka:
+        binder:
+          zkNodes: localhost
+          brokers: localhost
+
+
+#Setting the logging levels for the service
+logging:
+  level:
+#    com.netflix: WARN
+#    org.springframework.web: WARN
+    com.netflix: DEBUG
+    org.springframework.web: DEBUG
+    com.maxb.like: DEBUG
+
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+        defaultZone: http://localhost:8761/eureka/
+
+
+#security:
+#  oauth2:
+#   resource:
+#      userInfoUri: http://localhost:8901/auth/lilk
+        

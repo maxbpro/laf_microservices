@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: followerservice
+  profiles:
+    active:
+      default
+  cloud:
+    config:
+      enabled: true

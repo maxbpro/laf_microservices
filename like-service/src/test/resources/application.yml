@@ -1,0 +1,17 @@
+server:
+  port: ${PORT:3333}
+
+spring:
+  application:
+    name: like-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+  logging:
+    level:
+      org.springframework.cloud.contract: TRACE
+
+eureka:
+  client:
+    enabled: false
