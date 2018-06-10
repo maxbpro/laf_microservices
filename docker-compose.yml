@@ -102,22 +102,22 @@ services:
     restart: always
 
 
-#  followeservice:
-#    image: maxb/laf-follower-service:vk-laf-follower-service
-#    ports:
-#      - "8086:8085"
-#    environment:
-#      PROFILE: "default"
-#      SERVER_PORT: "8086"
-#      CONFIGSERVER_URI: "http://configserver:8888"
-#      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-#      EUREKASERVER_PORT:   "8761"
-#      CONFIGSERVER_PORT:   "8888"
-#      ZUULSERVER_PORT:     "5555"
-#      KAFKASERVER_PORT:    "2181"
-#      KAFKASERVER_URI: "kafkaserver"
-#      ZKSERVER_URI: "kafkaserver"
-#      ENCRYPT_KEY:       "IMSYMMETRIC"
+  followeservice:
+    image: maxb/laf-follower-service:vk-laf-follower-service
+    ports:
+      - "8086:8085"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8086"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      EUREKASERVER_PORT:   "8761"
+      CONFIGSERVER_PORT:   "8888"
+      ZUULSERVER_PORT:     "5555"
+      KAFKASERVER_PORT:    "2181"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "kafkaserver"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
 #    logging:
 #      driver: "fluentd"
 #      options:
@@ -126,12 +126,12 @@ services:
 #    depends_on:
 #      - fluentd
 
-#  database-follower:
-#    image: mongo
-#    volumes:
-#      - $HOME/follower-data:/data/db
-#      - $HOME/follower-datacd:/data/bkp
-#    restart: always
+  database-follower:
+    image: mongo
+    volumes:
+      - $HOME/follower-data:/data/db
+      - $HOME/follower-datacd:/data/bkp
+    restart: always
 
   userservice:
     image: maxb/laf-user-service:vk-laf-user-service
