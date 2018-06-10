@@ -24,7 +24,7 @@
 
     <module>user-service</module>
     <module>like-service</module>
-    <module>follower-service</module>
+    <!--<module>follower-service</module>-->
   </modules>
   <build>
     <plugins>
