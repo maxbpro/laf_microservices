@@ -18,5 +18,7 @@ public interface UserService {
 
     boolean activeInviteCode(String userId, String code);
 
+    boolean verify(String signedData, String signature);
+
     void clearAll();
 }

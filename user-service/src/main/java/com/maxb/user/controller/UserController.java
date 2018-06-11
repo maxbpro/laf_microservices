@@ -17,6 +17,7 @@ import java.util.List;
 @Slf4j
 public class UserController {
 
+
     @Autowired
     private UserService userService;
 
@@ -53,8 +54,17 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     private ResponseEntity<User> registerUser(@RequestBody User user){
-        userService.register(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+
+        User oldUser = userService.findByUserId(user.getUserId());
+
+        if(oldUser == null){
+            userService.register(user);
+            return new ResponseEntity<>(user, HttpStatus.CREATED);
+        }else{
+            //already in the system
+            return new ResponseEntity<>(oldUser, HttpStatus.OK);
+        }
+
     }
 
     @RequestMapping(value = "/activeInviteCode", method = RequestMethod.POST)
@@ -69,6 +79,46 @@ public class UserController {
         }
 
     }
+
+
+    @RequestMapping(value = "/verification", method = RequestMethod.POST)
+    public ResponseEntity verify(@RequestParam("signedData") String signedData,
+                       @RequestParam("signature") String signature,
+                       @RequestParam("userId") String userId,
+                       @RequestParam("number") int number){
+
+        if(userService.verify(signedData, signature)){
+
+            int value = 0;
+
+            if(number == 1){
+                value = 1500;  // 150
+            }else{
+                if(number == 2){
+                    value = 7500;   // 500
+                }else{
+                    if(number == 3){
+                        value = 20000;    // 1 000
+                    }else{
+                        if(number == 4){
+                            value = 50000;    //2 000
+                        }else{
+                            //do nothing
+                        }
+                    }
+                }
+            }
+
+            if(value > 50000)
+                value = 0;
+
+            userService.increaseBalance(userId, value);
+
+        }
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 
     @RequestMapping(value="/test",method = RequestMethod.GET)
